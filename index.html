@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday My Love ❤️</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="lock-screen">
+  <h1>🔐 Only for you ❤️</h1>
+  <input type="password" id="password" placeholder="Enter the secret password">
+  <button onclick="checkPassword()">Unlock 💖</button>
+  <p id="error"></p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main-content" style="display:none;">
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+    <h1 class="title">🎂 Happy Birthday <span>My Love ❤️</span></h1>
+
+    <p id="typing-text"></p>
+
+    <div class="slideshow">
+      <img id="slide" src="photos/1.jpg">
+    </div>
+
+    <button onclick="showSurprise()">🎁 Click for a Surprise</button>
+    <p id="surprise-text"></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<button onclick="toggleMusic()">🎵 Play / Pause Music</button>
+
+</body>
+</html>
