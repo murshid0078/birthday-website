@@ -1,104 +1,1228 @@
+* {
+  box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  text-align: center;
-  color: #fff;
-}
-
-.container {
-  padding: 30px;
-}
-
-.title {
-  font-size: 3rem;
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from { text-shadow: 0 0 10px pink; }
-  to { text-shadow: 0 0 25px red; }
-}
-
-#typing-text {
-  background: rgba(255,255,255,0.2);
-  padding: 20px;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-}
-
-
-.slideshow img {
-  transition: opacity 1s ease-in-out;
-}
-
-
-button {
-  background: #ff4d6d;
-  border: none;
-  padding: 12px 25px;
-  font-size: 1.2rem;
-  border-radius: 30px;
-  cursor: pointer;
+  font-family: 'Poppins', 'Dancing Script', sans-serif;
+  background: linear-gradient(135deg, #ff758f, #ffb199);
   color: white;
+  text-align: center;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
-button:hover {
-  background: #ff1e56;
+/* Enhanced Animated background with multiple layers */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.18), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(255,255,255,0.12), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08), transparent 60%);
+  z-index: -1;
+  animation: bgMove 12s ease-in-out infinite alternate, bgPulse 4s ease-in-out infinite;
 }
 
-#surprise-text {
-  margin-top: 20px;
-  font-size: 1.5rem;
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: sparkleFloat 20s linear infinite;
+  z-index: -1;
 }
-.hearts::before,
-.hearts::after {
-  content: "❤️ 💖 💕 💘 💗";
+
+/* 🎉 NEW: Floating hearts particles */
+body .heart-particles {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  font-size: 30px;
-  animation: float 15s linear infinite;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
 }
 
-@keyframes float {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-100vh); }
+.heart {
+  position: absolute;
+  width: 20px;
+  height: 18px;
+  background: #ff69b4;
+  transform: rotate(-45deg);
+  animation: floatHearts 6s linear infinite;
 }
-@keyframes fall {
-  to { transform: translateY(110vh); }
+
+.heart::before,
+.heart::after {
+  content: '';
+  width: 20px;
+  height: 18px;
+  position: absolute;
+  background: #ff69b4;
+  border-radius: 20px 20px 0 0;
+  transform: rotate(-45deg);
 }
+
+.heart::after {
+  transform: rotate(45deg);
+  top: 10px;
+}
+
+@keyframes floatHearts {
+  0% {
+    transform: translateY(100vh) rotate(0deg) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bgMove {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+@keyframes bgPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.95; }
+}
+
+@keyframes sparkleFloat {
+  from { transform: translateY(0px) rotate(0deg); }
+  to { transform: translateY(-20px) rotate(360deg); }
+}
+
+/* ================= PASSWORD SCREEN ================= */
 #lock-screen {
   height: 100vh;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+  gap: 12px;
+  animation: lockScreenFloat 6s ease-in-out infinite;
 }
+
+@keyframes lockScreenFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+#lock-screen h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  animation: titleGlow 3s ease-in-out infinite alternate;
+  background: linear-gradient(45deg, #fff, #ffd700, #fff);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes titleGlow {
+  0% { filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)); }
+  100% { filter: drop-shadow(0 0 20px rgba(255,215,0,0.8)); }
+}
+
+#lock-screen p {
+  opacity: 0.85;
+  font-size: 1rem;
+  animation: fadeBreathe 4s ease-in-out infinite;
+}
+
+@keyframes fadeBreathe {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* 🎉 NEW: Password strength indicator */
+#password-strength {
+  width: 260px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.2);
+  margin: 10px 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.strength-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.strength-weak { background: #ff4757; }
+.strength-medium { background: linear-gradient(90deg, #ff4757, #ffa502); }
+.strength-strong { background: linear-gradient(90deg, #2ed573, #1e90ff); }
 
 #lock-screen input {
-  padding: 10px;
-  border-radius: 20px;
+  padding: 14px;
+  width: 260px;
+  border-radius: 30px;
   border: none;
-  margin: 10px;
-  width: 220px;
+  outline: none;
+  font-size: 1.05rem;
   text-align: center;
+  background: rgba(255,255,255,0.9);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  font-family: 'Poppins', sans-serif;
 }
 
-#lock-screen button {
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  background: #fff;
-  color: #ff4d6d;
-  font-weight: bold;
-  cursor: pointer;
+#lock-screen input:focus {
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.95);
+}
+
+#lock-screen input:hover {
+  transform: scale(1.02);
 }
 
 #error {
-  color: yellow;
-  margin-top: 10px;
+  color: #fff3a0;
+  font-size: 0.95rem;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* ================= MAIN CONTENT ================= */
+#main-content {
+  display: none;
+  animation: slideInUp 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 50px 20px;
+}
+
+/* Enhanced Title - Updated Font */
+.title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 35px;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  animation: titleFloat 4s ease-in-out infinite;
+  background: linear-gradient(45deg, #fff, #ffd700, #ffecd2, #fff);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ================= LOVE LETTER CARD ================= */
+#typing-text {
+  background: rgba(255,255,255,0.28);
+  padding: 28px;
+  border-radius: 30px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 25px 55px rgba(0,0,0,0.25);
+  margin-bottom: 35px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  line-height: 1.8;
+  border: 1px solid rgba(255,255,255,0.2);
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  perspective: 1000px;
+}
+
+#typing-text:hover {
+  transform: translateY(-8px) rotateY(10deg) rotateX(5deg) scale(1.02);
+  box-shadow: 0 45px 100px rgba(0,0,0,0.4);
+}
+
+#typing-text::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s;
+}
+
+#typing-text:hover::before {
+  left: 100%;
+}
+
+/* 🎉 NEW: Typing cursor effect */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.25rem;
+  background: linear-gradient(180deg, #ff69b4, #ffd700);
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  vertical-align: bottom;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ================= SLIDESHOW ================= */
+.slideshow {
+  margin: 20px 0 30px;
+  perspective: 1000px;
+}
+
+.slideshow img {
+  width: 320px;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 30px;
+  box-shadow: 0 35px 70px rgba(0,0,0,0.45);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: saturate(1.1) brightness(1.05);
+}
+
+.slideshow img:hover {
+  transform: scale(1.08) rotateY(5deg) rotateX(2deg) translateZ(20px);
+  box-shadow: 0 45px 90px rgba(0,0,0,0.6);
+  filter: saturate(1.3) brightness(1.1);
+}
+
+.slideshow img:not(:hover) {
+  animation: imageFloat 6s ease-in-out infinite;
+}
+
+@keyframes imageFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+/* 🎉 NEW: Image frame glow effect */
+.image-frame {
+  position: relative;
+  display: inline-block;
+}
+
+.image-frame::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: linear-gradient(45deg, #ffd700, #ff69b4, #ffd700);
+  border-radius: 38px;
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.4s ease;
+  filter: blur(8px);
+}
+
+.slideshow img:hover + .image-frame::before,
+.image-frame:hover::before {
+  opacity: 1;
+  transform: scale(1.05);
+  animation: framePulse 2s infinite;
+}
+
+@keyframes framePulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255,215,0,0.6); }
+  50% { box-shadow: 0 0 40px rgba(255,105,180,0.8); }
+}
+
+/* 🎵🎂 NEW: MUSIC + CAKE SECTION beside photos */
+.music-cake-section {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+  margin: 40px 0;
+  flex-wrap: wrap;
+}
+
+.music-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 🎵 MUSIC BUTTON */
+.music-btn {
+  background: linear-gradient(135deg, #ff9a8b, #ff6b6b, #ff4757);
+  border: none;
+  padding: 20px 35px;
+  border-radius: 50px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 20px 50px rgba(255,107,107,0.6);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.music-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.6s;
+}
+
+.music-btn:hover::before {
+  left: 100%;
+}
+
+.music-btn:hover {
+  transform: translateY(-8px) scale(1.08);
+  box-shadow: 0 30px 70px rgba(255,107,107,0.9);
+}
+
+.music-btn i {
+  font-size: 1.8rem;
+  transition: all 0.3s ease;
+}
+
+.music-btn.playing i {
+  animation: musicNoteBounce 1.5s infinite;
+}
+
+@keyframes musicNoteBounce {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.2) rotate(10deg); }
+}
+
+#music-status {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 🎂 CAKE BUTTON */
+.cake-launcher {
+  display: flex;
+  justify-content: center;
+}
+
+.cake-btn-launch {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ff4757);
+  border: none;
+  padding: 20px 35px;
+  border-radius: 50px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 20px 50px rgba(255,107,107,0.6);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cake-btn-launch::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.6s;
+}
+
+.cake-btn-launch:hover::before {
+  left: 100%;
+}
+
+.cake-btn-launch:hover {
+  transform: translateY(-8px) scale(1.08);
+  box-shadow: 0 30px 70px rgba(255,107,107,0.9);
+}
+
+/* ================= LOVE STATS ================= */
+.love-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 40px 0;
+  flex-wrap: wrap;
+}
+
+.stat {
+  background: rgba(255,255,255,0.15);
+  padding: 20px 25px;
+  border-radius: 25px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.2);
+  font-family: 'Poppins', sans-serif;
+  min-width: 180px;
+  transition: all 0.4s ease;
+}
+
+.stat:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+.stat i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* ================= BUTTON (General) ================= */
+button {
+  background: linear-gradient(135deg, #ff3d68, #ff7a9c);
+  border: none;
+  padding: 16px 36px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  border-radius: 60px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(255,77,109,0.55);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 30px 60px rgba(255,77,109,0.75);
+}
+
+button:active {
+  transform: scale(0.95) translateY(-2px);
+}
+
+#surprise-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.7rem;
+  margin-top: 25px;
+  animation: fadeInUp 0.8s ease forwards, bounceIn 1.2s ease 0.8s forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* 🎉 NEW: Floating music notes */
+.music-notes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+}
+
+.note {
+  position: absolute;
+  font-size: 24px;
+  animation: musicFloat 8s linear infinite;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255,215,0,0.8);
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes musicFloat {
+  0% {
+    transform: translateX(-100px) translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw) translateY(-100px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* 🔥 NEW: Fireworks System */
+.fireworks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.firework {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: fireworkExplode 1.5s ease-out forwards;
+}
+
+@keyframes fireworkExplode {
+  0% {
+    transform: scale(0) translateY(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+/* 🎠 LOVE METER */
+.love-meter {
+  background: rgba(255,255,255,0.2);
+  padding: 25px;
+  border-radius: 25px;
+  margin: 25px 0;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.3);
+  font-family: 'Poppins', sans-serif;
+}
+
+.meter-container {
+  margin: 20px 0;
+}
+
+.meter {
+  width: 300px;
+  height: 20px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff69b4, #ffd700, #ff1493);
+  width: 0%;
+  border-radius: 10px;
+  transition: width 2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 0 20px rgba(255,105,180,0.8);
+  position: relative;
+}
+
+.meter-fill::after {
+  content: '💖';
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+}
+
+.love-btn {
+  background: linear-gradient(135deg, #ff1493, #ff69b4);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+  box-shadow: 0 10px 30px rgba(255,20,147,0.5);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.love-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: translateY(-50%);
+  transition: left 0.5s;
+}
+
+.love-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(255,20,147,0.7);
+}
+
+.love-btn:hover::after {
+  left: 100%;
+}
+
+/* 🎂 CAKE MODAL (NEW) */
+.cake-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.cake-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+}
+
+.cake-content {
+  background: linear-gradient(145deg, rgba(255,255,255,0.25), rgba(255,255,255,0.1));
+  backdrop-filter: blur(25px);
+  border-radius: 30px;
+  padding: 40px;
+  max-width: 450px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+  position: relative;
+  animation: cakeBounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes cakeBounceIn {
+  0% { transform: scale(0.3) rotate(5deg); opacity: 0; }
+  50% { transform: scale(1.1) rotate(-2deg); }
+  70% { transform: scale(0.95) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.close-cake-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.close-cake-btn:hover {
+  background: rgba(255,71,87,0.8);
+  transform: scale(1.1);
+}
+
+/* Cake inside modal (same styles as before but scoped to modal) */
+#cakeModal .cake {
+  position: relative;
+  width: 340px;
+  height: 300px;
+  margin: 0 auto;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+#cakeModal .layer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 25px 25px 8px 8px;
+  background: linear-gradient(145deg, #ff9a9e, #fecfef, #ffcccb, #ff9a9e);
+  background-size: 300% 300%;
+  animation: cakeShine 4s ease-in-out infinite;
+  box-shadow: 0 20px 45px rgba(255,154,158,0.4);
+}
+
+#cakeModal .bottom {
+  width: 300px;
+  height: 100px;
+  bottom: 25px;
+  box-shadow: 0 20px 50px rgba(255,154,158,0.5);
+}
+
+#cakeModal .middle {
+  width: 240px;
+  height: 80px;
+  bottom: 135px;
+  box-shadow: 0 15px 35px rgba(255,154,158,0.4);
+}
+
+#cakeModal .top {
+  width: 180px;
+  height: 65px;
+  bottom: 225px;
+  box-shadow: 0 12px 30px rgba(255,154,158,0.5);
+}
+
+@keyframes cakeShine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+#cakeModal .candles {
+  position: absolute;
+  top: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  width: 320px;
+}
+
+#cakeModal .candle {
+  width: 10px;
+  height: 40px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #f4d03f, #d4a574, #b8860b);
+  border-radius: 5px 5px 0 0;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: bottom;
+}
+
+#cakeModal .candle:hover {
+  transform: scale(1.1);
+}
+
+#cakeModal .candle::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(ellipse 60% 70% at 50% 20%, #ffeb3b, #ff9800, #f44336, transparent);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: 
+    0 0 12px #ff5722, 
+    0 0 24px #ffeb3b,
+    0 0 8px #fff inset;
+  animation: flameFlicker 0.12s infinite alternate;
+}
+
+#cakeModal .candle.lit::before {
+  animation: flameFlicker 0.15s infinite alternate;
+}
+
+#cakeModal .candle.blow-out::before {
+  animation: blowOut 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes flameFlicker {
+  0% { 
+    transform: translateX(-50%) scale(1) rotate(-2deg);
+    box-shadow: 0 0 12px #ff5722, 0 0 24px #ffeb3b;
+  }
+  100% { 
+    transform: translateX(-50%) scale(1.15) rotate(2deg);
+    box-shadow: 0 0 16px #ff5722, 0 0 30px #ffeb3b;
+  }
+}
+
+@keyframes blowOut {
+  0% { 
+    transform: translateX(-50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  40% { 
+    transform: translateX(-50%) scale(0.6) rotate(-10deg);
+    opacity: 0.4;
+  }
+  100% { 
+    transform: translateX(-50%) scale(0) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+#cakeModal .mic-btn {
+  background: linear-gradient(135deg, #ff6b9d, #ff8e8e, #ff6b9d);
+  border: none;
+  padding: 18px 40px;
+  border-radius: 50px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.25rem;
+  cursor: pointer;
+  margin: 25px 0;
+  box-shadow: 0 15px 45px rgba(255,107,157,0.6);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+#cakeModal .mic-level {
+  width: 250px;
+  height: 12px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 6px;
+  margin: 20px auto;
+  overflow: hidden;
+  box-shadow: inset 0 3px 12px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+#cakeModal .mic-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff4757, #ffa502, #2ed573, #1e90ff);
+  background-size: 200% 100%;
+  width: 0%;
+  border-radius: 6px;
+  transition: width 0.15s ease;
+  box-shadow: 0 0 20px rgba(255,107,157,0.9);
+  animation: micPulse 0.3s infinite alternate;
+  position: relative;
+}
+
+#cakeModal .mic-fill::after {
+  content: '🎤';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+@keyframes micPulse {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+#cakeModal .cake-status {
+  margin-top: 25px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 15px rgba(255,215,0,0.9);
+  animation: statusGlow 2s ease-in-out infinite alternate;
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes statusGlow {
+  0% { text-shadow: 0 0 15px rgba(255,215,0,0.9); }
+  100% { text-shadow: 0 0 25px rgba(255,215,0,1), 0 0 35px rgba(255,215,0,0.6); }
+}
+
+#cakeModal .cake-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  border: none;
+  padding: 15px 35px;
+  border-radius: 50px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15rem;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 12px 40px rgba(255,107,107,0.6);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#cakeModal .cake-btn:hover {
+  transform: scale(1.08) translateY(-3px);
+  box-shadow: 0 20px 55px rgba(255,107,107,0.8);
+}
+
+/* ================= THUMBNAILS ================= */
+.thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.thumbnails img {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  object-fit: cover;
+}
+
+.thumbnails img:hover {
+  transform: scale(1.2);
+  border-color: #ffd700;
+  box-shadow: 0 10px 25px rgba(255,215,0,0.5);
+}
+
+/* ================= FULLSCREEN BUTTON ================= */
+.fullscreen-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  backdrop-filter: blur(15px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.fullscreen-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 600px) {
+  .title {
+    font-size: 2.8rem;
+  }
+
+  #typing-text {
+    font-size: 1.05rem;
+    padding: 22px;
+  }
+
+  .slideshow img {
+    width: 250px;
+    height: 320px;
+  }
+
+  .music-cake-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .music-btn, .cake-btn-launch {
+    padding: 18px 30px;
+    font-size: 1.1rem;
+    min-width: 200px;
+  }
+
+  button {
+    padding: 14px 30px;
+    font-size: 1.1rem;
+  }
+
+  #lock-screen h1 {
+    font-size: 2.5rem;
+  }
+
+  .love-stats {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .stat {
+    min-width: auto;
+  }
+
+  .meter {
+    width: 250px;
+  }
+
+  #cakeModal .cake {
+    width: 300px;
+    height: 260px;
+  }
+
+  #cakeModal .candles {
+    width: 280px;
+    top: 55px;
+  }
+
+  #cakeModal .mic-level {
+    width: 220px;
+  }
+}
+/* BODY TEXT - Clean & Modern */
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400; /* Normal */
+}
+
+/* TITLES - Romantic & Elegant */
+.title, #lock-screen h1 {
+    font-family: 'Great Vibes', cursive;
+    font-weight: normal;
+}
+
+/* BUTTONS - Professional */
+button, .love-btn, .mic-btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500; /* Medium */
+}
+
+/* LOVE LETTER - Sophisticated */
+#typing-text {
+    font-family: 'Poppins', serif;
+    font-weight: 300; /* Light - Elegant */
+}
+/* PERFECT FONT HIERARCHY FOR YOUR BIRTHDAY PAGE */
+* {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.title, #lock-screen h1 {
+    font-family: 'Great Vibes', 'Poppins', cursive;
+    font-size: 4rem;
+    font-weight: normal;
+}
+
+h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+p, div, span {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+button {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+#typing-text {
+    font-family: 'Poppins', serif;
+    font-weight: 300;
+    font-size: 1.3rem;
+}
+/* PERFECT FONT HIERARCHY FOR YOUR BIRTHDAY PAGE */
+* {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.title, #lock-screen h1 {
+    font-family: 'Great Vibes', 'Poppins', cursive;
+    font-size: 4rem;
+    font-weight: normal;
+}
+
+h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+p, div, span {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+button {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+#typing-text {
+    font-family: 'Poppins', serif;
+    font-weight: 300;
+    font-size: 1.3rem;
+}
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    background: linear-gradient(135deg, #ff758f, #ffb199);
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+.title, #lock-screen h1 {
+    font-family: 'Great Vibes', cursive !important;
 }

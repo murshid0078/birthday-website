@@ -4,39 +4,176 @@
   <meta charset="UTF-8">
   <title>Happy Birthday My Love ❤️</title>
   <link rel="stylesheet" href="style.css">
+    <!-- YOUR EXISTING LINK - PERFECT! -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+
+<!-- 🎉 NEW: Floating hearts particles -->
+<div class="heart-particles" id="hearts"></div>
+
+<!-- 🎉 NEW: Music notes (appears after unlock) -->
+<div class="music-notes" id="musicNotes"></div>
 
 <!-- PASSWORD SCREEN -->
 <div id="lock-screen">
   <h1>🔐 Only for you ❤️</h1>
   <input type="password" id="password" placeholder="Enter the secret password">
+  
+  <!-- 🎉 NEW: Password strength indicator -->
+  <div id="password-strength">
+    <div class="strength-bar" id="strengthBar"></div>
+  </div>
+  
   <button onclick="checkPassword()">Unlock 💖</button>
   <p id="error"></p>
 </div>
 
 <!-- MAIN CONTENT -->
 <div id="main-content" style="display:none;">
-  <audio id="bg-music" loop>
+  <audio id="bg-music" loop preload="auto">
     <source src="music.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- 🎉 NEW: Enhanced particle canvas -->
+  <canvas id="particles-canvas"></canvas>
+
   <div class="container">
-    <h1 class="title">🎂 Happy Birthday <span>My Love ❤️</span></h1>
+    <h1 class="title">🎂 Happy Birthday My Love ❤️</h1>
 
-    <p id="typing-text"></p>
+    <!-- COUNTDOWN TO NEXT BIRTHDAY -->
+    <div class="countdown" id="countdown">
+      <i class="fas fa-gift"></i>
+      <span>Birthday :</span>
+      <div class="countdown-numbers" id="countdown-numbers"></div>
+    </div>
 
-    <div class="slideshow">
-      <img id="slide" src="photos/1.jpg">
+    <!-- Typing text with cursor effect -->
+    <p id="typing-text"><span id="typeHere"></span><span class="typing-cursor" id="cursor">|</span></p>
+
+    <!-- PHOTO GALLERY with enhanced frames -->
+    <div class="photo-gallery">
+      <div class="slideshow">
+        <!-- Image frame effect wrapper -->
+        <div class="image-frame">
+         <img id="slide" src="photos/1.jpg" alt="Our Memory">
+        </div>
+      </div>
+      <div class="thumbnails" id="thumbnails"></div>
+    </div>
+
+    <!-- 🎵🎂 NEW: MUSIC + CAKE BUTTONS beside photos -->
+    <div class="music-cake-section">
+      <!-- 🎵 AUTOPLAY BIRTHDAY MUSIC BUTTON -->
+      <div class="music-player">
+        <button onclick="toggleMusic()" id="musicToggle" class="music-btn">
+          <i id="music-icon" class="fas fa-play-circle"></i>
+          <span id="music-status">Play Birthday Song 🎵</span>
+        </button>
+      </div>
+
+      <!-- 🎂 CAKE BUTTON (separate button) -->
+      <div class="cake-launcher">
+        <button onclick="toggleCake()" class="cake-btn-launch">
+          <i class="fas fa-birthday-cake"></i> 🎂 Blow Candles!
+        </button>
+      </div>
+    </div>
+
+    <!-- LOVE STATS (UNCHANGED) -->
+    <div class="love-stats">
+      <div class="stat">
+        <i class="fas fa-heart"></i>
+        <span id="love-count">365</span> Days Together
+      </div>
+      <div class="stat">
+        <i class="fas fa-kiss-wink-heart"></i>
+        <span id="kiss-count">∞</span> Kisses
+      </div>
+      <div class="stat">
+        <i class="fas fa-star"></i>
+        <span id="star-count">1000+</span> Reasons I Love You
+      </div>
     </div>
 
     <button onclick="showSurprise()">🎁 Click for a Surprise</button>
     <p id="surprise-text"></p>
+
+    <!-- 🎠 LOVE METER (UNCHANGED) -->
+    <div class="love-meter" id="loveMeter" style="display:none;">
+      <h3>💕 Our Love Level</h3>
+      <div class="meter-container">
+        <div class="meter">
+          <div class="meter-fill" id="loveFill" style="width: 0%;"></div>
+        </div>
+        <span id="lovePercentage">0%</span>
+      </div>
+      <button onclick="fillLoveMeter()" class="love-btn">Fill with Love 💖</button>
+    </div>
+
+    <!-- 🎂 NEW: CAKE MODAL (popup when button clicked) -->
+    <div class="cake-modal" id="cakeModal">
+      <div class="cake-backdrop"></div>
+      <div class="cake-content">
+        <button onclick="toggleCake()" class="close-cake-btn">✕</button>
+        
+        <h2>🎂 Make a Wish & Blow! 🎤</h2>
+        <p>💨 Blow into microphone or hover candles with mouse!</p>
+        
+        <button onclick="startMicBlowing()" class="mic-btn" id="micBtn">
+          🎤 Enable Voice Magic
+        </button>
+        
+        <div class="cake-container">
+          <div class="mic-level" id="micLevel">
+            <div class="mic-fill"></div>
+          </div>
+          
+          <div class="cake" id="cake">
+            <!-- Cake layers -->
+            <div class="layer bottom"></div>
+            <div class="layer middle"></div>
+            <div class="layer top"></div>
+            
+            <!-- 7 CANDLES -->
+            <div class="candles" id="candles">
+              <div class="candle lit"></div>
+              <div class="candle lit"></div>
+              <div class="candle lit"></div>
+              <div class="candle lit"></div>
+              <div class="candle lit"></div>
+              <div class="candle lit"></div>
+              <div class="candle lit"></div>
+            </div>
+          </div>
+          
+          <div class="cake-status" id="cakeStatus">
+            <span id="candlesLeft">7</span> candles left ✨ | Blow into mic! 🎤💨
+          </div>
+          
+          <button onclick="relightCandles()" class="cake-btn" id="relightBtn" style="display:none;">
+            🔄 Relight Candles
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEMORY LANE (UNCHANGED) -->
+    <div class="memory-lane" id="memory-lane" style="display:none;">
+      <h2>💭 Our Special Moments</h2>
+      <div class="memories-container"></div>
+    </div>
   </div>
 </div>
 
-<script src="script.js"></script>
-<button onclick="toggleMusic()">🎵 Play / Pause Music</button>
+<!-- FULLSCREEN CONFETTI BUTTON -->
+<div class="fullscreen-btn" id="fullscreen-btn" title="Fullscreen Experience">
+  <i class="fas fa-expand-arrows-alt"></i>
+</div>
 
+<script src="script.js"></script>
 </body>
 </html>
